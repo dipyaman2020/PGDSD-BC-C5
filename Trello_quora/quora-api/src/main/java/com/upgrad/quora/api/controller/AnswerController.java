@@ -50,7 +50,7 @@ public class AnswerController {
     }
 
     // get all answers from DB by questionId
-    @RequestMapping(method = RequestMethod.GET, path = "answer/all/{questionId}")
+    @RequestMapping(method = RequestMethod.GET, path = "/answer/all/{questionId}")
     public ResponseEntity<List<AnswerEntity>> getAllQuestionsByUserId(@PathVariable("questionId") final Integer questionId, HttpSession session){
 
         // get answers by questionId
