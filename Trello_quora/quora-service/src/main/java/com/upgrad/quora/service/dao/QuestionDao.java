@@ -6,7 +6,9 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Repository
 public class QuestionDao {
@@ -14,15 +16,23 @@ public class QuestionDao {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public QuestionEntity createQuestion(QuestionEntity questionEntity){
+    public QuestionEntity createQuestion(QuestionEntity questionEntity) throws Exception{
+//        DriverManager.registerDriver(new org.postgresql.Driver());
+//        Connection c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/quora");
         try {
-            /*entityManager.createNativeQuery("INSERT INTO Question (uuid, content, date, user_id) VALUES (?,?,?,?)")
+//            PreparedStatement stmt = c.prepareStatement("INSERT INTO question (uuid, content, date, user_id) " +
+//                    "VALUES (UUID.randomUUID().toString(),questionEntity.getContent(),new Date(),questionEntity.getUsersByUserId().getId())");
+
+                    //stmt.executeUpdate();
+            entityManager.createNativeQuery("INSERT INTO question (uuid, content, date, user_id) VALUES (?,?,?,?)")
                     .setParameter(1, UUID.randomUUID().toString())
                     .setParameter(2, questionEntity.getContent())
-                    .setParameter(3, ZonedDateTime.now())
-                    .setParameter(3, questionEntity.getUsersByUserId().getId())
-                    .executeUpdate();*/
-            entityManager.persist(questionEntity);
+                    .setParameter(3, new Date())
+                    .setParameter(4, questionEntity.getUsersByUserId().getId())
+                    .executeUpdate();
+//            stmt.close();
+//            c.close();
+            //entityManager.persist(questionEntity);
         }catch (Exception e){
             System.out.println(e);
         }finally {

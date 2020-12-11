@@ -18,7 +18,12 @@ public class QuestionBusinessService {
     // create question
     @Transactional(propagation = Propagation.REQUIRED)
     public QuestionEntity createQuestion(final QuestionEntity questionEntity){
-        return questionDao.createQuestion(questionEntity);
+        try {
+            return questionDao.createQuestion(questionEntity);
+        }catch (Exception e){
+            System.out.println(e);
+            return new QuestionEntity();
+        }
     }
 
     // get all question
