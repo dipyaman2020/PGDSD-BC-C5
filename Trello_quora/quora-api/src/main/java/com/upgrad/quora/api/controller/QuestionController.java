@@ -33,7 +33,11 @@ public class QuestionController {
         questionEntity.setDate(new Timestamp(System.currentTimeMillis()));
         questionEntity.setUuid(UUID.randomUUID().toString());
         // get logged in user entity
-        UsersEntity user = (UsersEntity) session.getAttribute("loggeduser");
+        UsersEntity user = new UsersEntity();// (UsersEntity) session.getAttribute("loggeduser");
+        user.setId(1026);
+        user.setUuid("database_uuid1");
+        user.setFirstname("Abhi");
+        user.setLastname("Mahajan");
         questionEntity.setUsersByUserId(user);
         // post question to DB through service
         QuestionEntity response = questionBusinessService.createQuestion(questionEntity);
@@ -44,7 +48,7 @@ public class QuestionController {
     }
 
     // get all question from DB
-    @RequestMapping(method = RequestMethod.GET, path = "/question/all", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(method = RequestMethod.GET, path = "/question/all")
     public ResponseEntity<List<QuestionEntity>> getAllQuestions(HttpSession session){
 
         // post question to DB through service
@@ -54,7 +58,7 @@ public class QuestionController {
     }
 
     // get all question from DB by UserId
-    @RequestMapping(method = RequestMethod.GET, path = "/question/all/{userId}", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(method = RequestMethod.GET, path = "/question/all/{userId}")
     public ResponseEntity<List<QuestionEntity>> getAllQuestionsByUserId(@PathVariable("userId") final Integer userId, HttpSession session){
 
         // get logged in user entity
